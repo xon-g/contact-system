@@ -20,6 +20,7 @@ Route::post('register', [RegisterController::class, 'register']);
 // Contact Routes (only accessible for logged-in users)
 Route::middleware('auth')->group(function () {
     Route::get('contacts', [ContactController::class, 'index'])->name('contacts.index');
+    Route::get('/contacts/table', [ContactController::class, 'table'])->name('contacts.table');
     Route::get('contacts/create', [ContactController::class, 'create'])->name('contacts.create');
     Route::post('contacts', [ContactController::class, 'store'])->name('contacts.store');
     Route::get('contacts/{contact}/edit', [ContactController::class, 'edit'])->name('contacts.edit');

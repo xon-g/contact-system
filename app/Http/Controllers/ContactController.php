@@ -17,6 +17,17 @@ class ContactController extends Controller
         return view('contacts.index', compact('contacts'));
     }
 
+    public function table(Request $request)
+    {
+        $searchTerm = $request->input('query');
+        $contacts = Auth::user()->contacts()
+            ->where('name', 'like', "%{$searchTerm}%")
+            ->orWhere('email', 'like', "%{$searchTerm}%")
+            ->paginate(10);
+
+        return view('contacts.table', compact('contacts'));
+    }
+
     public function create()
     {
         return view('contacts.create');
