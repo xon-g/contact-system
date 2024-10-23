@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ContactController extends Controller
 {
+    use AuthorizesRequests;
+
     public function index()
     {
         $contacts = Auth::user()->contacts()->paginate(10);
@@ -27,19 +30,21 @@ class ContactController extends Controller
             'email' => 'required|email|max:255',
         ]);
 
+        ray($request->all());
+
         Auth::user()->contacts()->create($request->all());
         return redirect()->route('contacts.index')->with('success', 'Contact added successfully');
     }
 
     public function edit(Contact $contact)
     {
-        $this->authorize('update', $contact);
+        $this->authorize('update-contact', $contact);
         return view('contacts.edit', compact('contact'));
     }
 
     public function update(Request $request, Contact $contact)
     {
-        $this->authorize('update', $contact);
+        $this->authorize('update-contact', $contact);
         $contact->update($request->validate([
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:20',
@@ -51,7 +56,7 @@ class ContactController extends Controller
 
     public function destroy(Contact $contact)
     {
-        $this->authorize('delete', $contact);
+        $this->authorize('delete-contact', $contact);
         $contact->delete();
         return redirect()->route('contacts.index')->with('success', 'Contact deleted successfully');
     }
