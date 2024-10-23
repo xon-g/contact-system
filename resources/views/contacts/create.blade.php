@@ -21,6 +21,10 @@
             <input type="text" name="name" id="name" class="w-full p-2 border border-gray-300 rounded mt-1" required>
         </div>
         <div>
+            <label for="company" class="block text-gray-700">Company</label>
+            <input type="text" name="company" id="company" class="w-full p-2 border border-gray-300 rounded mt-1" required>
+        </div>
+        <div>
             <label for="phone" class="block text-gray-700">Phone</label>
             <input type="text" name="phone" id="phone" class="w-full p-2 border border-gray-300 rounded mt-1" required>
         </div>

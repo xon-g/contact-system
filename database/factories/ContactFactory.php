@@ -14,6 +14,7 @@ class ContactFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
+            'company' => $this->faker->company,
             'phone' => $this->faker->phoneNumber,
             'email' => $this->faker->email,
             'user_id' => User::where('email', 'test@example.com')->first()->id,

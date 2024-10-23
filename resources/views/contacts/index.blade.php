@@ -12,6 +12,7 @@
         <thead>
             <tr>
                 <th class="px-4 py-2">Name</th>
+                <th class="px-4 py-2">Company</th>
                 <th class="px-4 py-2">Email</th>
                 <th class="px-4 py-2">Phone</th>
                 <th class="px-4 py-2">Actions</th>
@@ -20,7 +21,8 @@
         <tbody>
             @foreach ($contacts as $contact)
             <tr>
-                <td class="border px-4 py-2">{{ $contact->name ?? '-'}}</td>
+                <td class="border px-4 py-2">{{ $contact->name  }}</td>
+                <td class="border px-4 py-2">{{ $contact->company }}</td>
                 <td class="border px-4 py-2">{{ $contact->email }}</td>
                 <td class="border px-4 py-2">{{ $contact->phone }}</td>
                 <td class="border px-4 py-2">

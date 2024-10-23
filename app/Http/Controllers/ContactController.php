@@ -26,6 +26,7 @@ class ContactController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'company' => 'required|string|max:255',
             'phone' => 'required|string|max:20',
             'email' => 'required|email|max:255',
         ]);
@@ -47,6 +48,7 @@ class ContactController extends Controller
         $this->authorize('update-contact', $contact);
         $contact->update($request->validate([
             'name' => 'required|string|max:255',
+            'company' => 'required|string|max:255',
             'phone' => 'required|string|max:20',
             'email' => 'required|email|max:255',
         ]));
