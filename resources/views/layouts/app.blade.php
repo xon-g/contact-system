@@ -12,6 +12,9 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+    <!-- Styles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
 </head>
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
     <div class="min-h-screen flex flex-col">
@@ -21,8 +24,11 @@
                 <a href="{{ url('/') }}" class="text-white font-bold text-xl">
                     {{ config('app.name', 'Contact System') }}
                 </a>
-                <ul class="flex space-x-4 text-white">
+                <ul class="flex space-x-6 text-white">
                     @auth
+                        <li>
+                            <a href="{{ route('contacts.create') }}" class="hover:text-gray-400">Add Contact</a>
+                        </li>
                         <li>
                             <a href="{{ route('contacts.index') }}" class="hover:text-gray-400">Contacts</a>
                         </li>
