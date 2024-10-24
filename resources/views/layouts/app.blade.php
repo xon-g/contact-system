@@ -54,6 +54,7 @@
 
         .main-content {
             padding: 2em;
+            height: 100vh;
         }
 
         .footer {
@@ -105,7 +106,7 @@
         </main>
 
         <!-- Footer -->
-        <footer class="footer">
+        <footer class="footer" style="position: fixed; bottom: 0; width: 100%;">
             <p>&copy; {{ date('Y') }} {{ config('app.name', 'Contact System') }}. All rights reserved.</p>
         </footer>
     </div>

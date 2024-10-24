@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     if (Auth::check()) {
-        return redirect()->route('contacts.index');
+        return redirect()->intended("contacts");
     }
     return view('welcome');
 });
@@ -23,6 +23,8 @@ Route::post('register', [RegisterController::class, 'register']);
 
 // Contact Routes (only accessible for logged-in users)
 Route::middleware('auth')->group(function () {
+    Route::get('thanks', [RegisterController::class, 'thankYou'])->name('thanks');
+
     Route::get('contacts', [ContactController::class, 'index'])->name('contacts.index');
     Route::get('contacts/list', [ContactController::class, 'list'])->name('contacts.table');
     Route::get('contacts/create', [ContactController::class, 'create'])->name('contacts.create');

@@ -15,6 +15,8 @@
 
         .add-contact-form-errors {
             color: red;
+            padding: 12px;
+            background-color: #f8d7da;
             margin-bottom: 20px;
         }
 
@@ -67,7 +69,7 @@
         @csrf
         <div>
             <label class="input-label">Name</label>
-            <input type="text" name="name" id="name" class="input-field" required>
+            <input type="text" name="name" id="name" class="input-field">
         </div>
         <div>
             <label class="input-label">Company</label>

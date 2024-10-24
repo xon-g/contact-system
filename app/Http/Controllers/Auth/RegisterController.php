@@ -5,13 +5,23 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
     public function showRegistrationForm()
     {
+        if (Auth::check()) {
+            return redirect()->route('contacts.index');
+        }
+
         return view('auth.register');
+    }
+
+    public function thankYou()
+    {
+        return view('auth.thanks');
     }
 
     public function register(Request $request)
@@ -28,6 +38,8 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('login')->with('status', 'Registration successful! Please login.');
+        Auth::attempt($request->only('email', 'password'));
+
+        return $this->thankYou()->with('status', 'Thank you for registering.');
     }
 }

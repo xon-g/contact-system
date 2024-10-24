@@ -35,7 +35,7 @@
     <tbody id="table-body"></tbody>
 </table>
 
-<nav class="pagination">
+<nav id="pagination">
     <ul id="pagination-ul"></ul>
 </nav>
 
@@ -46,13 +46,14 @@
     let page = urlParams.get('page') || 1;
 
     async function fetchContacts(passeDquery, pasedPpage) {
-        document.getElementById('table-body').innerHTML = '';
-
         const fetchUrl = `/contacts/list?query=${passeDquery || query}&page=${pasedPpage || page}`
 
         const response = await fetch(fetchUrl)
             .then(response => response.status === 200 ? response.json() : Promise.reject(response))
-            .then(json => json)
+            .then(json => {
+                document.getElementById('table-body').innerHTML = '';
+                return json;
+            })
             .catch(error => {
                 console.error('Error:', error);
             })
@@ -101,31 +102,33 @@
             editLink.appendChild(editIcon);
             actionsCell.appendChild(editLink);
 
-            const deleteForm = document.createElement('form');
-            deleteForm.action = `/contacts/${contact.id}`;
-            deleteForm.method = 'POST';
-            deleteForm.style.display = 'inline';
-            
-            const csrfInput = document.createElement('input');
-            csrfInput.type = 'hidden';
-            csrfInput.name = '_token';
-            csrfInput.value = csrf;
-            deleteForm.appendChild(csrfInput);
-
-            const methodInput = document.createElement('input');
-            methodInput.type = 'hidden';
-            methodInput.name = '_method';
-            methodInput.value = 'DELETE';
-            deleteForm.appendChild(methodInput);
-
             const deleteButton = document.createElement('button');
-            deleteButton.type = 'submit';
+            deleteButton.type = 'button';
 
             const deleteIcon = document.createElement('i');
             deleteIcon.classList.add('fas', 'fa-trash-alt');
             deleteButton.appendChild(deleteIcon);
-            deleteForm.appendChild(deleteButton);
-            actionsCell.appendChild(deleteForm);
+
+            actionsCell.appendChild(deleteButton);
+
+            deleteButton.addEventListener('click', () => {
+                if (confirm('Are you sure you want to delete this contact?')) {
+                    fetch(`/contacts/${contact.id}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': csrf
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert(data.message);
+                        fetchContacts();
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                }
+            });
 
             row.appendChild(actionsCell);
             document.getElementById('table-body').appendChild(row);
@@ -152,6 +155,7 @@
         searchInput.addEventListener('input', function() {
             query = searchInput.value;
             urlParams.set('query', query);
+            window.history.replaceState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
             fetchContacts()
         });
 
@@ -162,11 +166,22 @@
             const pagination = document.getElementById('pagination-ul');
             pagination.style.cssText = `
                 display: flex;
+                margin-top: 0.5em;
+                flex-wrap: wrap;
                 justify-content: center;
                 padding: 1em;
                 gap: 1em;
             `;
             pagination.innerHTML = '';
+
+            let urlParams = new URLSearchParams(window.location.search);
+            urlParams.set('page', data.current_page);
+            window.history.replaceState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
+
+            if (data.data.length === 0) {
+                urlParams.set('page', 1);
+                window.history.replaceState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
+            }
 
             if (data.current_page === 1) {
                 pagination.innerHTML += '<li><span>&laquo;</span></li>';

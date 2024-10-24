@@ -17,6 +17,8 @@
 
         .edit-contact-form-errors {
             color: red;
+            padding: 12px;
+            background-color: #f8d7da;
             margin-bottom: 20px;
         }
 
@@ -77,19 +79,19 @@
         @method('PUT')
         <div>
             <label class="input-label">Name</label>
-            <input type="text" name="name" id="name" class="input-field" value="{{ $contact->name }}" required>
+            <input type="text" name="name" id="name" class="input-field" value="{{ $contact->name }}">
         </div>
         <div>
             <label class="input-label">Company</label>
-            <input type="text" name="company" id="company" class="input-field" value="{{ $contact->company }}" required>
+            <input type="text" name="company" id="company" class="input-field" value="{{ $contact->company }}">
         </div>
         <div>
             <label class="input-label">Phone</label>
-            <input type="text" name="phone" id="phone" class="input-field" value="{{ $contact->phone }}" required>
+            <input type="text" name="phone" id="phone" class="input-field" value="{{ $contact->phone }}">
         </div>
         <div>
             <label class="input-label">Email</label>
-            <input type="email" name="email" id="email" class="input-field" value="{{ $contact->email }}" required>
+            <input type="email" name="email" id="email" class="input-field" value="{{ $contact->email }}">
         </div>
         <div style="text-align: center; margin-top: 20px">
             <button type="submit" class="submit-button">Update Contact</button>

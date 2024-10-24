@@ -18,6 +18,8 @@
 
         .register-form-errors {
             color: red;
+            padding: 12px;
+            background-color: #f8d7da;
             margin-bottom: 20px;
         }
 
@@ -82,19 +84,19 @@
         @csrf
         <div>
             <label class="input-label">Name</label>
-            <input type="text" name="name" id="name" class="input-field" required>
+            <input type="text" name="name" id="name" class="input-field">
         </div>
         <div>
             <label class="input-label">Email</label>
-            <input type="email" name="email" id="email" class="input-field" required>
+            <input type="email" name="email" id="email" class="input-field" >
         </div>
         <div>
             <label class="input-label">Password</label>
-            <input type="password" name="password" id="password" class="input-field" required>
+            <input type="password" name="password" id="password" class="input-field" >
         </div>
         <div>
             <label class="input-label">Confirm Password</label>
-            <input type="password" name="password_confirmation" id="password_confirmation" class="input-field" required>
+            <input type="password" name="password_confirmation" id="password_confirmation" class="input-field" >
         </div>
         <div style="text-align: center; margin-top: 20px">
             <button type="submit" class="submit-button">Register</button>

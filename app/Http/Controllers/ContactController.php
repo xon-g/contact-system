@@ -81,6 +81,6 @@ class ContactController extends Controller
     {
         $this->authorize('delete-contact', $contact);
         $contact->delete();
-        return redirect()->route('contacts.index')->with('success', 'Contact deleted successfully');
+        return response()->json(['message' => 'Contact deleted successfully']);
     }
 }
