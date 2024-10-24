@@ -15,9 +15,9 @@ Validation for contact form fields
 ## Installation
 Clone the repository using git clone
 - Run `composer install` and `npm install `to install dependencies.
-- Run php artisan migrate to create the database tables
-- Run php artisan db:seed to initialize seeders (optional)
-- Run php artisan serve to start the development server
+- Run `php artisan migrate` to create the database tables
+- Run `php artisan db:seed` to initialize seeders (optional)
+- Run `npm run dev` to start the development server
 
 ## Usage
 - Register a new user account
