@@ -23,6 +23,8 @@ class ContactController extends Controller
         $contacts = Auth::user()->contacts()
             ->where('name', 'like', "%{$searchTerm}%")
             ->orWhere('email', 'like', "%{$searchTerm}%")
+            ->orWhere('company', 'like', "%{$searchTerm}%")
+            ->orWhere('phone', 'like', "%{$searchTerm}%")
             ->paginate(10);
 
         return view('contacts.table', compact('contacts'));
