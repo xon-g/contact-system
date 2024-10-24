@@ -1,10 +1,36 @@
 @extends('layouts.app')
 
-@section('content')
-<div class="container mx-auto">
-    <h1 class="text-2xl font-bold mb-6">My Contacts</h1>
+<style>
+    .index-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
 
-    <input type="text" id="search-input" class="w-full p-2 border border-gray-300 rounded mt-4" placeholder="Search...">
+        .index-title {
+            color: #0A0F49;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #contacts-table {
+            margin-top: 20px;
+        }
+    }
+</style>
+
+@section('content')
+<div class="index-container">
+    <h1 class="index-title">My Contacts</h1>
+
+    <input type="text" id="search-input" placeholder="Search...">
     
     <div id="contacts-table">
         @include('contacts.table')
@@ -21,7 +47,7 @@
             fetch('/contacts/table?query=' + encodeURIComponent(searchTerm))
                 .then(response => response.text())
                 .then(html => {
-                    contactsTable.innerHTML = html;
+                    contactsTable.innerHTML = html.replace('contacts/table', 'contacts')
                 });
         });
     </script>

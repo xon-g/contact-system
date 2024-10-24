@@ -1,11 +1,68 @@
 @extends('layouts.app')
 
+<style>
+    .edit-contact-form-container {
+        max-width: 500px;
+        margin: 0 auto;
+
+
+        .edit-contact-form-title {
+            color: #0A0F49;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+
+        .edit-contact-form-errors {
+            color: red;
+            margin-bottom: 20px;
+        }
+
+
+        .input-label {
+            color: #0A0F49;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+
+        .submit-button {
+            font-size: 16px;
+            background-color: #0A0F49;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+
+
+            transition: background-color 0.3s ease;
+            &:hover {
+                background-color: #2980b9;
+            }
+        }
+    }
+</style>
+
+
 @section('content')
-<div class="max-w-md mx-auto mt-10">
-    <h1 class="text-3xl font-bold text-center mb-6">Edit Contact</h1>
+<div class="edit-contact-form-container">
+    <h1 class="edit-contact-form-title">Edit Contact</h1>
+
 
     @if ($errors->any())
-        <div class="bg-red-500 text-white p-3 mb-4">
+        <div class="edit-contact-form-errors">
             <ul>
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -14,27 +71,28 @@
         </div>
     @endif
 
-    <form action="{{ route('contacts.update', $contact->id) }}" method="POST" class="space-y-6">
+
+    <form action="{{ route('contacts.update', $contact->id) }}" method="POST">
         @csrf
         @method('PUT')
         <div>
-            <label for="name" class="block text-gray-700">Name</label>
-            <input type="text" name="name" id="name" class="w-full p-2 border border-gray-300 rounded mt-1" value="{{ $contact->name }}" required>
+            <label class="input-label">Name</label>
+            <input type="text" name="name" id="name" class="input-field" value="{{ $contact->name }}" required>
         </div>
         <div>
-            <label for="company" class="block text-gray-700">Company</label>
-            <input type="text" name="company" id="company" class="w-full p-2 border border-gray-300 rounded mt-1" value="{{ $contact->company }}" required>
+            <label class="input-label">Company</label>
+            <input type="text" name="company" id="company" class="input-field" value="{{ $contact->company }}" required>
         </div>
         <div>
-            <label for="phone" class="block text-gray-700">Phone</label>
-            <input type="text" name="phone" id="phone" class="w-full p-2 border border-gray-300 rounded mt-1" value="{{ $contact->phone }}" required>
+            <label class="input-label">Phone</label>
+            <input type="text" name="phone" id="phone" class="input-field" value="{{ $contact->phone }}" required>
         </div>
         <div>
-            <label for="email" class="block text-gray-700">Email</label>
-            <input type="email" name="email" id="email" class="w-full p-2 border border-gray-300 rounded mt-1" value="{{ $contact->email }}" required>
+            <label class="input-label">Email</label>
+            <input type="email" name="email" id="email" class="input-field" value="{{ $contact->email }}" required>
         </div>
-        <div>
-            <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded">Update Contact</button>
+        <div style="text-align: center; margin-top: 20px">
+            <button type="submit" class="submit-button">Update Contact</button>
         </div>
     </form>
 </div>

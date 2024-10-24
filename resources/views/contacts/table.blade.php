@@ -1,34 +1,57 @@
-<table class="min-w-full bg-white mt-6">
+<style>
+    .table-container {
+        width: 100%;
+
+        .thead {
+            padding: 10px;
+        }
+
+        .no-contacts {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+
+        .table-data {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+        
+    }
+</style>
+
+<table class="table-container">
     <thead>
         <tr>
-            <th class="px-4 py-2">Name</th>
-            <th class="px-4 py-2">Company</th>
-            <th class="px-4 py-2">Email</th>
-            <th class="px-4 py-2">Phone</th>
-            <th class="px-4 py-2">Actions</th>
+            <th class="thead">Name</th>
+            <th class="thead">Company</th>
+            <th class="thead">Email</th>
+            <th class="thead">Phone</th>
+            <th class="thead">Actions</th>
         </tr>
     </thead>
     <tbody>
         @if (count($contacts) === 0)
         <tr>
-            <td class="border px-4 py-2 text-center" colspan="5">No contacts found.</td>
+            <td class="no-contacts" colspan="5">No contacts found.</td>
         </tr>
         @endif
 
         @foreach ($contacts as $contact)
         <tr>
-            <td class="border px-4 py-2">{{ $contact->name  }}</td>
-            <td class="border px-4 py-2">{{ $contact->company }}</td>
-            <td class="border px-4 py-2">{{ $contact->email }}</td>
-            <td class="border px-4 py-2">{{ $contact->phone }}</td>
-            <td class="border px-4 py-2">
-                <a href="{{ route('contacts.edit', $contact) }}" class="bg-yellow-500 text-white px-4 py-2 rounded">
+            <td class="table-data">{{ $contact->name }}</td>
+            <td class="table-data">{{ $contact->company ?? '-' }}</td>
+            <td class="table-data">{{ $contact->email ?? '-' }}</td>
+            <td class="table-data">{{ $contact->phone  ?? '-' }}</td>
+            <td class="table-data">
+                <a href="{{ route('contacts.edit', $contact) }}" style="padding-right: 10px">
                     <i class="fas fa-edit"></i>
                 </a>
-                <form action="{{ route('contacts.destroy', $contact) }}" method="POST" onsubmit="return confirm('Are you sure?');" style="display:inline;">
+                <form action="{{ route('contacts.destroy', $contact) }}" method="POST" onsubmit="return confirm('Are you sure you want to DELETE?');" style="display:inline;">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">
+                    <button type="submit">
                         <i class="fas fa-trash-alt"></i>
                     </button>
                 </form>

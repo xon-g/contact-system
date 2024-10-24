@@ -1,15 +1,74 @@
 @extends('layouts.app')
 
+
+<style>
+    .login-form-container {
+        max-width: 500px;
+        margin: 0 auto;
+
+
+        .login-form-title {
+            color: #0A0F49;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+
+        .login-form-errors {
+            color: red;
+            margin-bottom: 20px;
+        }
+
+
+        .input-label {
+            color: #0A0F49;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+
+        .submit-button {
+            font-size: 16px;
+            background-color: #0A0F49;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+
+
+            transition: background-color 0.3s ease;
+            &:hover {
+                background-color: #2980b9;
+            }
+        }
+    }
+</style>
+
+
 @section('content')
-<div class="max-w-md mx-auto mt-10">
-    <h1 class="text-3xl font-bold text-center mb-6">Login</h1>
+<div class="login-form-container">
+    <h1 class="login-form-title">Login</h1>
+
 
     @if (session('status'))
-        <div class="bg-green-500 text-white p-3 mb-4">{{ session('status') }}</div>
+        <div class="login-form-errors">{{ session('status') }}</div>
     @endif
 
+
     @if ($errors->any())
-        <div class="bg-red-500 text-white p-3 mb-4">
+        <div class="login-form-errors">
             <ul>
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -18,18 +77,19 @@
         </div>
     @endif
 
-    <form action="{{ route('login') }}" method="POST" class="space-y-6">
+
+    <form action="{{ route('login') }}" method="POST">
         @csrf
         <div>
-            <label for="email" class="block text-gray-700">Email</label>
-            <input type="email" name="email" id="email" class="w-full p-2 border border-gray-300 rounded mt-1" required>
+            <label class="input-label">Email</label>
+            <input type="email" name="email" id="email" class="input-field" required>
         </div>
         <div>
-            <label for="password" class="block text-gray-700">Password</label>
-            <input type="password" name="password" id="password" class="w-full p-2 border border-gray-300 rounded mt-1" required>
+            <label class="input-label">Password</label>
+            <input type="password" name="password" id="password" class="input-field" required>
         </div>
-        <div>
-            <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded">Login</button>
+        <div style="text-align: center; margin-top: 20px">
+            <button type="submit" class="submit-button">Login</button>
         </div>
     </form>
 </div>

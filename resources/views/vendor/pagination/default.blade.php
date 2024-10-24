@@ -1,37 +1,78 @@
-<nav class="flex justify-center py-4">
-    <ul class="flex items-center gap-4">
+<style>
+    nav.pagination {
+        display: flex;
+        justify-content: center;
+        padding: 1em;
+
+        ul {
+            display: flex;
+            align-items: center;
+            gap: 1em;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            margin-right: 1em;
+        }
+        
+        a {
+            color: #0A0F49;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            color: #2980b9;
+        }
+        
+        span {
+            color: #0A0F49;
+        }
+        
+        span.bg-blue-500 {
+            background-color: #0A0F49;
+            color: #fff;
+            padding: 0.5em 1em;
+            border-radius: 0.5em;
+        }
+    }
+</style>
+
+<nav class="pagination">
+    <ul>
         @if ($paginator->onFirstPage())
-            <li class="mr-1">
-                <span class="text-blue-500 hover:text-blue-700">&laquo;</span>
+            <li>
+                <span>&laquo;</span>
             </li>
         @else
-            <li class="mr-1">
-                <a href="{{ $paginator->url(1) }}" class="text-blue-500 hover:text-blue-700">&laquo;</a>
+            <li>
+                <a href="{{ $paginator->url(1) }}">&laquo;</a>
             </li>
         @endif
 
         @if ($paginator->onFirstPage())
-            <li class="mr-1">
-                <span class="text-blue-500 hover:text-blue-700">&lt;</span>
+            <li>
+                <span>&lt;</span>
             </li>
         @else
-            <li class="mr-1">
-                <a href="{{ $paginator->previousPageUrl() }}" class="text-blue-500 hover:text-blue-700">&lt;</a>
+            <li>
+                <a href="{{ $paginator->previousPageUrl() }}">&lt;</a>
             </li>
         @endif
 
         @foreach ($elements as $element)
             @if (is_string($element))
-                <li class="mr-1">{{ $element }}</li>
+                <li>{{ $element }}</li>
             @endif
 
             @if (is_array($element))
                 @foreach ($element as $page => $url)
-                    <li class="mr-1">
+                    <li>
                         @if ($page == $paginator->currentPage())
-                            <span class="bg-blue-500 text-white px-4 py-2 rounded">{{ $page }}</span>
+                            <span style="background-color: #0A0F49; color: #fff; padding: 0.5em 1em; border-radius: 0.5em;">{{ $page }}</span>
                         @else
-                            <a href="{{ $url }}" class="text-blue-500 hover:text-blue-700">{{ $page }}</a>
+                            <a href="{{ $url }}">{{ $page }}</a>
                         @endif
                     </li>
                 @endforeach
@@ -39,14 +80,14 @@
         @endforeach
 
         @if ($paginator->hasMorePages())
-            <li class="mr-1">
-                <a href="{{ $paginator->nextPageUrl() }}" class="text-blue-500 hover:text-blue-700">&gt;</a>
+            <li>
+                <a href="{{ $paginator->nextPageUrl() }}">&gt;</a>
             </li>
         @endif
 
         @if ($paginator->hasMorePages())
-            <li class="mr-1">
-                <a href="{{ $paginator->url($paginator->lastPage()) }}" class="text-blue-500 hover:text-blue-700">&raquo;</a>
+            <li>
+                <a href="{{ $paginator->url($paginator->lastPage()) }}">&raquo;</a>
             </li>
         @endif
     </ul>
