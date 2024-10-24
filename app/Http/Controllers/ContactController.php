@@ -22,12 +22,16 @@ class ContactController extends Controller
         $searchTerm = $request->input('query', null);
         $page = $request->input('page', 1);
 
-        $contacts = Auth::user()->contacts()
+        $authUser = Auth::user();
+
+        $contacts = $authUser->contacts()
             ->when($searchTerm, function ($query, $searchTerm) {
-                $query->where('name', 'like', "%{$searchTerm}%")
-                    ->orWhere('email', 'like', "%{$searchTerm}%")
-                    ->orWhere('company', 'like', "%{$searchTerm}%")
-                    ->orWhere('phone', 'like', "%{$searchTerm}%");
+                $query->where(function ($q) use ($searchTerm) {
+                    $q->where('name', 'like', "%{$searchTerm}%")
+                        ->orWhere('email', 'like', "%{$searchTerm}%")
+                        ->orWhere('company', 'like', "%{$searchTerm}%")
+                        ->orWhere('phone', 'like', "%{$searchTerm}%");
+                });
             })
             ->paginate(10, ['*'], 'page', $page);
 
