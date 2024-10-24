@@ -39,9 +39,9 @@ class ContactController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'company' => 'required|string|max:255',
-            'phone' => 'required|string|max:20',
-            'email' => 'required|email|max:255',
+            'company' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:20',
+            'email' => 'nullable|email:rfc,dns|max:255',
         ]);
 
         ray($request->all());
@@ -61,9 +61,9 @@ class ContactController extends Controller
         $this->authorize('update-contact', $contact);
         $contact->update($request->validate([
             'name' => 'required|string|max:255',
-            'company' => 'required|string|max:255',
-            'phone' => 'required|string|max:20',
-            'email' => 'required|email|max:255',
+            'company' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:20',
+            'email' => 'nullable|email:rfc,dns|max:255',
         ]));
 
         return redirect()->route('contacts.index')->with('success', 'Contact updated successfully');
