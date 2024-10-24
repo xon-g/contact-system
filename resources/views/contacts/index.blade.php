@@ -35,21 +35,5 @@
     <div id="contacts-table">
         @include('contacts.table')
     </div>
-
-
-    <script>
-        const searchInput = document.getElementById('search-input');
-        const contactsTable = document.getElementById('contacts-table');
-
-        searchInput.addEventListener('input', function() {
-            const searchTerm = searchInput.value;
-
-            fetch('/contacts/table?query=' + encodeURIComponent(searchTerm))
-                .then(response => response.text())
-                .then(html => {
-                    contactsTable.innerHTML = html.replace('contacts/table', 'contacts')
-                });
-        });
-    </script>
 </div>
 @endsection

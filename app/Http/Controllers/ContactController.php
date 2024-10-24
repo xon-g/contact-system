@@ -17,17 +17,21 @@ class ContactController extends Controller
         return view('contacts.index', compact('contacts'));
     }
 
-    public function table(Request $request)
+    public function list(Request $request)
     {
-        $searchTerm = $request->input('query');
-        $contacts = Auth::user()->contacts()
-            ->where('name', 'like', "%{$searchTerm}%")
-            ->orWhere('email', 'like', "%{$searchTerm}%")
-            ->orWhere('company', 'like', "%{$searchTerm}%")
-            ->orWhere('phone', 'like', "%{$searchTerm}%")
-            ->paginate(10);
+        $searchTerm = $request->input('query', null);
+        $page = $request->input('page', 1);
 
-        return view('contacts.table', compact('contacts'));
+        $contacts = Auth::user()->contacts()
+            ->when($searchTerm, function ($query, $searchTerm) {
+                $query->where('name', 'like', "%{$searchTerm}%")
+                    ->orWhere('email', 'like', "%{$searchTerm}%")
+                    ->orWhere('company', 'like', "%{$searchTerm}%")
+                    ->orWhere('phone', 'like', "%{$searchTerm}%");
+            })
+            ->paginate(10, ['*'], 'page', $page);
+
+        return response()->json($contacts);
     }
 
     public function create()
