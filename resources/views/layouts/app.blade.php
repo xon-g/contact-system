@@ -12,6 +12,9 @@
     <!-- Tailwind CSS -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
 </head>
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
     <div class="min-h-screen flex flex-col">
